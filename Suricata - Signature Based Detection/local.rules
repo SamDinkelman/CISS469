@@ -1,0 +1,7 @@
+alert http any any -> any any (msg:"POLICY HTTP Portable network graphics downloaded"; http_accept; content:"image/png"; sid:1; rev:1;)
+
+alert http any any -> any any (msg:"POLICY HTTP Base64 encoding detected"; file_data; pcre:"/[\+0-9a-zA-Z=]{20,}/"; sid:2; rev:1;)
+
+alert tcp any any -> $HOME_NET [1:1024] (msg:"SCAN nmap -sS"; threshold: type threshold, track by_src, count 20, seconds 60; sid:3; rev:1;)      
+
+alert dns any any -> any any (msg:"POLICY DNS Domain name request with entropy > 3 and at least 85% of max entropy"; luajit:processdns.lua; sid:4; rev:1;)
